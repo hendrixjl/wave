@@ -58,7 +58,7 @@ bool copywf(const string& infile, const string& outfile)
     return false;
 }
 
-bool printwf(const string& infile, const string& outfile)
+bool printwf(const string& infile)
 {
     auto in = readwf(infile);
     if (in.first)
@@ -111,7 +111,7 @@ int main(int argc, const char * argv[])
     }
     else {
         if (cmd == "-print") {
-            printwf(argv[2], argv[3]);
+            printwf(argv[2]);
         } else {
             if (argc != 4) {
                 cout << "Usage: " << argv[0] << " -copy <infile> <outfile>" << endl;
