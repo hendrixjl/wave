@@ -169,22 +169,32 @@ private:
     std::string Data;
 };
 
+uint8_t bytesToSample(const char *b, uint8_t& sample) {
+    sample = static_cast<uint8_t>(*b);
+    return sample;
+}
 
+int16_t bytesToSample(const char *b, int16_t& sample) {
+    sample = static_cast<int16_t>(uint16_t(b[0]) + uint16_t(b[1])*0x0100);
+    return sample;
+}
+
+
+template<typename Sample_t>
 class datasubchunk : public subchunk // assume 16 bits
 {
 public:
         
     datasubchunk(uint32_t size, const std::string& data) : SubchunkId{"data"}, SubchunkSize{size} {
-        for (auto i=0; i<size/2; ++i) {
-            Data.push_back( data[i*2] + data[i*2+1]*0x100 );
+        for (auto i=0; i<size/sizeof(Sample_t); ++i) {
+            Sample_t sample{};
+            bytesToSample(&data[i/sizeof(Sample_t)], sample);
+            Data.push_back( sample );
         }
     }
     
-    datasubchunk(uint32_t size, const std::vector<int16_t>& data) : SubchunkId{"data"}, SubchunkSize{size} {
-        for (auto i=0; i<size/2; ++i) {
-            Data.push_back( data[i*2] + data[i*2+1]*0x100 );
-        }
-    }
+    datasubchunk(uint32_t size, const std::vector<int16_t>& data) : SubchunkId{"data"}, SubchunkSize{size}, Data{data} {}
+
     
     std::unique_ptr<subchunk> clone() const {
         return make_unique<datasubchunk>(SubchunkSize, Data);
@@ -193,10 +203,13 @@ public:
     std::ostream& textout(std::ostream& out) const {
         out << "Subchunk2Id=" << SubchunkId;
         out << " Subchunk2Size=" << SubchunkSize;
-        out << " {" << size() << "}";
-//        for (auto d : Data) {
-//            out << std::hex << std::setw(4) << std::setfill('0') << d << " ";
-//        }
+        out << " {" << size() << "} ";
+        if (!Data.empty()) {
+//            for (const auto& d : Data) {
+//                out << " " << d;
+//            }
+            out << " " << Data[0] << "... for " << Data.size() << " samples";
+        }
         return out;
     }
     
@@ -215,7 +228,7 @@ public:
 private:
     std::string SubchunkId;
     uint32_t SubchunkSize;
-    std::vector<int16_t> Data;
+    std::vector<Sample_t> Data;
 };
 
 
@@ -251,7 +264,7 @@ inline std::unique_ptr<subchunk> make_subchunk(std::istream& in) {
     }
     
     if (subchkId == "data") {
-        return make_unique<datasubchunk>(chunksize, data);
+        return make_unique<datasubchunk<int16_t>>(chunksize, data);
     }
     
     return nullptr;
@@ -293,7 +306,7 @@ inline std::unique_ptr<subchunk> make_fixed_subchunk(uint32_t size, std::istream
     }
     
     if (subchkId == "data") {
-        return make_unique<datasubchunk>(chunksize, data);
+        return make_unique<datasubchunk<int16_t>>(chunksize, data);
     }
     
     return nullptr;
