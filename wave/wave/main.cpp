@@ -20,6 +20,12 @@
 
 using namespace std;
 
+/**
+ * @brief Copy a wave file to a file.
+ * @param outname - the name of the output file
+ * @param wv - the wave file
+ * @return true if successful
+ */
 bool makeCopy(const string& outname, const wavefile& wv) {
     auto out = ofstream{outname};
     if (!out) {
@@ -31,7 +37,12 @@ bool makeCopy(const string& outname, const wavefile& wv) {
     return true;
 }
 
-std::pair<bool,wavefile> readwf(const string& infile)
+/**
+ * @brief Read a wave file
+ * @parm infile - The name of the input file
+ * @return std::pair<bool, wavefile>
+ */
+pair<bool,wavefile> readwf(const string& infile)
 {
     auto in = ifstream{infile};
     if (!in)
@@ -46,6 +57,12 @@ std::pair<bool,wavefile> readwf(const string& infile)
     return make_pair<bool,wavefile>(false, move(wf));
 }
 
+/**
+ * @brief Copy a wave file
+ * @param infile
+ * @param output
+ * @return true if successful
+ */
 bool copywf(const string& infile, const string& outfile)
 {
     auto in = readwf(infile);
@@ -58,7 +75,12 @@ bool copywf(const string& infile, const string& outfile)
     return false;
 }
 
-bool printwf(const string& infile)
+/**
+ * @brief print a wave file
+ * @param infile
+ * @return true if successful
+ */
+bool printwf(const string& infile) // Print a wave file
 {
     auto in = readwf(infile);
     if (in.first)
@@ -70,6 +92,12 @@ bool printwf(const string& infile)
     return false;
 }
 
+/**
+ * @brief Fix a wave file
+ * @param infile
+ * @param outfile
+ * @return true if successful
+ */
 bool fixwf(const string& infile, const string& outfile)
 {
     cout << "Try to fix " << infile << endl;
