@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5DE7041E177B819800102C54 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE7041D177B819800102C54 /* main.cpp */; };
 		5DE70420177B819900102C54 /* wave.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5DE7041F177B819800102C54 /* wave.1 */; };
+		5DE7042C177B9E5A00102C54 /* fmtsubchunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE7042A177B9E5A00102C54 /* fmtsubchunk.cpp */; };
+		5DE7042F177B9F9B00102C54 /* subchunk_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE7042D177B9F9A00102C54 /* subchunk_factory.cpp */; };
+		5DE70432177BA21500102C54 /* fillrsubchunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE70430177BA21500102C54 /* fillrsubchunk.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +35,15 @@
 		5DE70427177B822F00102C54 /* subchunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = subchunk.h; sourceTree = "<group>"; };
 		5DE70428177B822F00102C54 /* wavefile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wavefile.h; sourceTree = "<group>"; };
 		5DE70429177B822F00102C54 /* wavehdr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wavehdr.h; sourceTree = "<group>"; };
+		5DE7042A177B9E5A00102C54 /* fmtsubchunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fmtsubchunk.cpp; sourceTree = "<group>"; };
+		5DE7042B177B9E5A00102C54 /* fmtsubchunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fmtsubchunk.h; sourceTree = "<group>"; };
+		5DE7042D177B9F9A00102C54 /* subchunk_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = subchunk_factory.cpp; sourceTree = "<group>"; };
+		5DE7042E177B9F9B00102C54 /* subchunk_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = subchunk_factory.h; sourceTree = "<group>"; };
+		5DE70430177BA21500102C54 /* fillrsubchunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fillrsubchunk.cpp; sourceTree = "<group>"; };
+		5DE70431177BA21500102C54 /* fillrsubchunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fillrsubchunk.h; sourceTree = "<group>"; };
+		5DE70433177BA24B00102C54 /* datasubchunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = datasubchunk.h; sourceTree = "<group>"; };
+		5DE70434177BA3D500102C54 /* mymemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mymemory.h; sourceTree = "<group>"; };
+		5DE70435177BD0CD00102C54 /* datasubchunk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = datasubchunk.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +82,15 @@
 				5DE70429177B822F00102C54 /* wavehdr.h */,
 				5DE7041D177B819800102C54 /* main.cpp */,
 				5DE7041F177B819800102C54 /* wave.1 */,
+				5DE7042A177B9E5A00102C54 /* fmtsubchunk.cpp */,
+				5DE7042B177B9E5A00102C54 /* fmtsubchunk.h */,
+				5DE7042D177B9F9A00102C54 /* subchunk_factory.cpp */,
+				5DE7042E177B9F9B00102C54 /* subchunk_factory.h */,
+				5DE70430177BA21500102C54 /* fillrsubchunk.cpp */,
+				5DE70431177BA21500102C54 /* fillrsubchunk.h */,
+				5DE70433177BA24B00102C54 /* datasubchunk.h */,
+				5DE70434177BA3D500102C54 /* mymemory.h */,
+				5DE70435177BD0CD00102C54 /* datasubchunk.cpp */,
 			);
 			path = wave;
 			sourceTree = "<group>";
@@ -126,6 +147,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DE7041E177B819800102C54 /* main.cpp in Sources */,
+				5DE7042C177B9E5A00102C54 /* fmtsubchunk.cpp in Sources */,
+				5DE7042F177B9F9B00102C54 /* subchunk_factory.cpp in Sources */,
+				5DE70432177BA21500102C54 /* fillrsubchunk.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
