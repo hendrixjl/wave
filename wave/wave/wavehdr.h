@@ -21,6 +21,7 @@ public:
     wavhdr(const wavhdr&)=default;
     wavhdr(wavhdr&&)=default;
     ~wavhdr()=default;
+    wavhdr& operator=(const wavhdr&)=default;
     
     wavhdr(std::istream& in)
     : ChunkId(CHUNK_ID_SIZE, ' '),
@@ -30,21 +31,6 @@ public:
         in.read(&ChunkId[0], CHUNK_ID_SIZE);
         binread(in, ChunkSize);
         in.read(&Format[0], FORMAT_SIZE);
-    }
-    
-    bool fix(std::istream& in) {
-        {
-            char buffer[CHUNK_ID_SIZE+1]{};
-            in.read(buffer, CHUNK_ID_SIZE);
-            ChunkId = std::string{buffer};
-        }
-        binread(in, ChunkSize);
-        {
-            char buffer[FORMAT_SIZE+1]{};
-            in.read(buffer, FORMAT_SIZE);
-            Format = std::string{buffer};
-        }
-        return !in.eof();
     }
     
     std::ostream& textout(std::ostream& out) const  {

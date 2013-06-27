@@ -10,19 +10,17 @@
 #define wave_wavefile_h
 
 #include "binutils.h"
+#include "subchunk_factory.h"
 #include <string>
 #include <stdint.h>
 #include <vector>
-#include "subchunk.h"
+#include <iostream>
 
 class wavefile
 {
 public:
     wavefile()=default;
-    
-    wavefile(wavefile&& wf) : hdr{wf.hdr} {
-        subchunks = std::move(wf.subchunks);
-    }
+    wavefile(wavefile&&)=default;
     
     wavefile(const wavefile& wf) : hdr{wf.hdr} {
         for (const auto&  sc : wf.subchunks) {
@@ -34,7 +32,7 @@ public:
     : hdr{in}, subchunks{} {
         auto bleft = hdr.filesize() - hdr.size();
         while (bleft > 0) {
-            auto subchnk = make_subchunk(in);
+            auto subchnk = subchunk_factory::instance().create(in);
             bleft -= subchnk->size();
             subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
         }
@@ -57,14 +55,10 @@ public:
     }
     
     bool fix(std::istream& in) {
-        if (!hdr.fix(in))
-        {
-            std::cout << "Could not read header." << std::endl;
-            return false;
-        }
+        hdr = wavhdr(in);
         auto bleft = hdr.filesize() - hdr.size();
         while (bleft > 0) {
-            auto subchnk = make_fixed_subchunk(bleft, in);
+            auto subchnk = subchunk_factory::instance().make_fixed_subchunk(bleft, in);
             bleft -= subchnk->size();
             subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
         }
