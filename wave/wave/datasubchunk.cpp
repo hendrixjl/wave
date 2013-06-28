@@ -8,6 +8,7 @@
 
 #include "datasubchunk.h"
 #include "subchunk_factory.h"
+#include "binutils.h
 #include <iostream>
 
 using namespace std;
@@ -30,8 +31,7 @@ datasubchunk::datasubchunk(std::istream& in)
 : SubchunkId{"data"}
 {
     binread(in, SubchunkSize);
-    auto data = std::string(SubchunkSize, ' ');
-    in.read(&data[0], SubchunkSize);
+    auto data = buffered_read(in, SubchunkSize);
     for (auto i=0; i<SubchunkSize/sizeof(Sample_t); ++i) {
         Sample_t sample{};
         bytesToSample(&data[i*sizeof(Sample_t)], sample);
