@@ -17,6 +17,7 @@ class datasubchunk : public subchunk // assume 16 bits
 {
 public:
     using Sample_t=int16_t;
+    
     datasubchunk(std::istream& in);
     
     datasubchunk(uint32_t size, const std::vector<Sample_t>& data);
@@ -25,27 +26,9 @@ public:
         return std::make_unique<datasubchunk>(SubchunkSize, Data);
     }
     
-    std::ostream& textout(std::ostream& out) const {
-        out << "SubchunkId=" << SubchunkId;
-        out << " SubchunkSize=" << SubchunkSize;
-        out << " {" << size() << "} ";
-        if (!Data.empty()) {
-            //            for (const auto& d : Data) {
-            //                out << " " << d;
-            //            }
-            out << " " << Data[0] << "... for " << Data.size() << " samples";
-        }
-        return out;
-    }
+    std::ostream& textout(std::ostream& out) const;
     
-    std::ostream& binout(std::ostream& out) const {
-        out.write(SubchunkId.c_str(), SUBCHUNKID_SIZE);
-        binwrite(out, SubchunkSize);
-        for (auto d : Data) {
-            binwrite(out, d); // @TODO make portable
-        }
-        return out;
-    }
+    std::ostream& binout(std::ostream& out) const;
     
     uint32_t size() const {
         return SUBCHUNKID_SIZE + sizeof(uint32_t) + SubchunkSize;
