@@ -11,7 +11,7 @@
 #include "fmtsubchunk.h" // temporary
 #include "fillrsubchunk.h" // temporary
 #include "datasubchunk.h" // temporary
-
+#include "binutils.h"
 #include <iostream>
 using namespace std;
 
