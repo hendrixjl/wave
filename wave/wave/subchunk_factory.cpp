@@ -12,31 +12,31 @@
 #include "fillrsubchunk.h" // temporary
 #include "datasubchunk.h" // temporary
 
+#include <iostream>
+using namespace std;
+
+void subchunk_factory::announce(const std::string& s) const
+{
+    cout << "registering factory for " << s << endl;
+}
 
 std::unique_ptr<subchunk> subchunk_factory::create(std::istream& in)
 {
     auto subchkId = std::string(subchunk::SUBCHUNKID_SIZE, ' ');
     in.read(&subchkId[0], subchunk::SUBCHUNKID_SIZE);
+
+    cout << "create chunk for id=" << subchkId << endl;
     
-    if (subchkId == "fmt ")
+    auto i = mymap.find(subchkId);
+    if (i != mymap.end())
     {
-        return std::make_unique<fmtsubchunk>(in);
+        return (i->second)(in);
+    }
+    else
+    {
+        cout << "Not found!" << endl;
     }
 
-    uint32_t chunksize;
-    binread(in, chunksize);
-    
-    auto data = std::string(chunksize, '\0');
-    in.read(&data[0], chunksize);
-    
-    if (subchkId == "FLLR") {
-        return std::make_unique<fillrsubchunk>(chunksize, data);
-    }
-    
-    if (subchkId == "data") {
-        return std::make_unique<datasubchunk<int16_t>>(chunksize, data);
-    }
-    
     return nullptr;
 }
 

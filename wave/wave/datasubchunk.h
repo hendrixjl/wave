@@ -2,24 +2,24 @@
 //  datasubchunk.h
 //  wave
 //
-//  Created by Jonathan Hendrix on 6/26/13.
+//  Created by Jonathan Hendrix on 6/27/13.
 //  Copyright (c) 2013 Jonathan Hendrix. All rights reserved.
 //
 
-#ifndef wave_datasubchunk_h
-#define wave_datasubchunk_h
+#ifndef __wave__datasubchunk__
+#define __wave__datasubchunk__
 
 #include "subchunk.h"
 #include "mymemory.h"
 #include <vector>
 
-template<typename Sample_t>
 class datasubchunk : public subchunk // assume 16 bits
 {
 public:
+    using Sample_t=int16_t;
     datasubchunk(std::istream& in);
     
-    datasubchunk(uint32_t size, const std::vector<int16_t>& data);
+    datasubchunk(uint32_t size, const std::vector<Sample_t>& data);
     
     std::unique_ptr<subchunk> clone() const {
         return std::make_unique<datasubchunk>(SubchunkSize, Data);
@@ -56,5 +56,4 @@ private:
     std::vector<Sample_t> Data;
 };
 
-
-#endif
+#endif /* defined(__wave__datasubchunk__) */

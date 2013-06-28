@@ -15,11 +15,7 @@
 class fillrsubchunk : public subchunk
 {
 public:
-    fillrsubchunk(std::istream& in) : SubchunkId("FLLR") {
-        binread(in, SubchunkSize);
-        Data = std::string{' ', SubchunkSize};
-        in.read(&Data[0], SubchunkSize);
-    }
+    fillrsubchunk(std::istream& in);
     
     fillrsubchunk(uint32_t size, const std::string& data) : SubchunkId("FLLR"), SubchunkSize(size), Data(data) {
     }

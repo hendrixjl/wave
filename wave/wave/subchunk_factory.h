@@ -28,6 +28,7 @@ public:
     
     template<typename T>
     bool register_type(const std::string& name,  creator_t create_function) {
+        announce(name);
         mymap.insert(std::make_pair(name, create_function));
         return true;
     }
@@ -39,6 +40,8 @@ public:
 private:
     subchunk_factory()=default;
     subchunk_factory(const subchunk_factory&)=delete;
+    
+    void announce(const std::string& s) const;
     
     std::unordered_map<std::string, creator_t> mymap;
 };

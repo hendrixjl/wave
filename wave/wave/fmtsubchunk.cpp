@@ -8,6 +8,7 @@
 
 #include "fmtsubchunk.h"
 #include "subchunk_factory.h"
+#include <iostream>
 
 using namespace std;
 

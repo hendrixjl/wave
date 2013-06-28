@@ -7,7 +7,14 @@
 //
 
 #include "fillrsubchunk.h"
-
 #include "subchunk_factory.h"
+#include <iostream>
+using namespace std;
 
-static auto b = subchunk_factory::instance().register_type<fillrsubchunk>("fmt ", create_subchunk<fillrsubchunk>());
+static auto b = subchunk_factory::instance().register_type<fillrsubchunk>("FLLR", create_subchunk<fillrsubchunk>());
+
+fillrsubchunk::fillrsubchunk(std::istream& in) : SubchunkId("FLLR") {
+    binread(in, SubchunkSize);
+    Data = std::string(SubchunkSize, ' ');
+    in.read(&Data[0], SubchunkSize);
+}
