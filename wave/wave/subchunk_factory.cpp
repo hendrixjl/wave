@@ -22,8 +22,7 @@ void subchunk_factory::announce(const std::string& s) const
 
 std::unique_ptr<subchunk> subchunk_factory::create(std::istream& in)
 {
-    auto subchkId = std::string(subchunk::SUBCHUNKID_SIZE, ' ');
-    in.read(&subchkId[0], subchunk::SUBCHUNKID_SIZE);
+    auto subchkId = buffered_read(in, subchunk::SUBCHUNKID_SIZE;
 
     cout << "create chunk for id=" << subchkId << endl;
     
@@ -42,8 +41,8 @@ std::unique_ptr<subchunk> subchunk_factory::create(std::istream& in)
 
 
 std::unique_ptr<subchunk> subchunk_factory::make_fixed_subchunk(uint32_t size, std::istream& in) {
-    auto subchkId = std::string(subchunk::SUBCHUNKID_SIZE, ' ');
-    in.read(&subchkId[0], subchunk::SUBCHUNKID_SIZE);
+    auto subchkId = buffered_read(in, subchunk::SUBCHUNKID_SIZE);
+    
     std::unordered_map<std::string, creator_t> mymap;
     
     auto i = mymap.find(subchkId);
