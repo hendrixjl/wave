@@ -17,26 +17,15 @@ class fillrsubchunk : public subchunk
 public:
     fillrsubchunk(std::istream& in);
     
-    fillrsubchunk(uint32_t size, const std::string& data) : SubchunkId("FLLR"), SubchunkSize(size), Data(data) {
-    }
+    fillrsubchunk(uint32_t size, const std::string& data);
     
     std::unique_ptr<subchunk> clone() const {
         return std::make_unique<fillrsubchunk>(SubchunkSize, Data);
     }
     
-    std::ostream& textout(std::ostream& out) const {
-        out << "SubchunkId=" << SubchunkId;
-        out << " SubchunkSize=" << SubchunkSize;
-        out << " {" << size() << "}";
-        return out;
-    }
+    std::ostream& textout(std::ostream& out) const;
     
-    std::ostream& binout(std::ostream& out) const {
-        out.write(SubchunkId.c_str(), SUBCHUNKID_SIZE);
-        binwrite(out, SubchunkSize);
-        out.write(Data.c_str(), Data.size());
-        return out;
-    }
+    std::ostream& binout(std::ostream& out) const;
     
     uint32_t size() const {
         return SUBCHUNKID_SIZE + sizeof(uint32_t) + SubchunkSize;
