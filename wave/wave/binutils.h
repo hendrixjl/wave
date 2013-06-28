@@ -18,7 +18,7 @@ std::istream& binread(std::istream& in, T& t)
 }
 
 
-std::string buffread(std::istream& in, size_t bytesToRead)
+std::string buffered_read(std::istream& in, size_t bytesToRead)
 {
     auto buffer = std::string(bytesToRead, '\0');
     in.read(&buffer[0], bytesToRead);
