@@ -41,3 +41,25 @@ datasubchunk::datasubchunk(std::istream& in)
 
 datasubchunk::datasubchunk(uint32_t size, const std::vector<Sample_t>& data)
 : SubchunkId{"data"}, SubchunkSize{size}, Data{data} {}
+
+std::ostream& datasubchunk::textout(std::ostream& out) const {
+    out << "SubchunkId=" << SubchunkId;
+    out << " SubchunkSize=" << SubchunkSize;
+    out << " {" << size() << "} ";
+    if (!Data.empty()) {
+        // for (const auto& d : Data) {
+        // out << " " << d;
+        // }
+        out << " " << Data[0] << "... for " << Data.size() << " samples";
+    }
+    return out;
+}
+    
+std::ostream& datasubchunk::binout(std::ostream& out) const {
+    out.write(SubchunkId.c_str(), SUBCHUNKID_SIZE);
+    binwrite(out, SubchunkSize);
+    for (auto d : Data) {
+        binwrite(out, d); // @TODO make portable
+    }
+    return out;
+}
