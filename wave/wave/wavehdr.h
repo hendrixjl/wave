@@ -24,13 +24,10 @@ public:
     wavhdr& operator=(const wavhdr&)=default;
     
     wavhdr(std::istream& in)
-    : ChunkId(CHUNK_ID_SIZE, ' '),
-    ChunkSize{},
-    Format(FORMAT_SIZE, ' ')
+    : ChunkId{buffered_read(in, CHUNK_ID_SIZE)},
+    ChunkSize{binread(in, ChunkSize)},
+    Format{buffered_read(in, FORMAT_SIZE)}
     {
-        in.read(&ChunkId[0], CHUNK_ID_SIZE);
-        binread(in, ChunkSize);
-        in.read(&Format[0], FORMAT_SIZE);
     }
     
     std::ostream& textout(std::ostream& out) const  {
