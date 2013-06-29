@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D064046177D122D00791EE4 /* datasubchunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D064044177D122D00791EE4 /* datasubchunk.cpp */; };
+		5D064048177D1CD200791EE4 /* wavefile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5D064047177D1CD200791EE4 /* wavefile.cpp */; };
 		5DE7041E177B819800102C54 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE7041D177B819800102C54 /* main.cpp */; };
 		5DE70420177B819900102C54 /* wave.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5DE7041F177B819800102C54 /* wave.1 */; };
 		5DE7042C177B9E5A00102C54 /* fmtsubchunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5DE7042A177B9E5A00102C54 /* fmtsubchunk.cpp */; };
@@ -28,6 +30,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5D064044177D122D00791EE4 /* datasubchunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = datasubchunk.cpp; sourceTree = "<group>"; };
+		5D064045177D122D00791EE4 /* datasubchunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datasubchunk.h; sourceTree = "<group>"; };
+		5D064047177D1CD200791EE4 /* wavefile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wavefile.cpp; sourceTree = "<group>"; };
 		5DE7041A177B819800102C54 /* wave */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = wave; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE7041D177B819800102C54 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		5DE7041F177B819800102C54 /* wave.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = wave.1; sourceTree = "<group>"; };
@@ -41,9 +46,7 @@
 		5DE7042E177B9F9B00102C54 /* subchunk_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = subchunk_factory.h; sourceTree = "<group>"; };
 		5DE70430177BA21500102C54 /* fillrsubchunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fillrsubchunk.cpp; sourceTree = "<group>"; };
 		5DE70431177BA21500102C54 /* fillrsubchunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fillrsubchunk.h; sourceTree = "<group>"; };
-		5DE70433177BA24B00102C54 /* datasubchunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = datasubchunk.h; sourceTree = "<group>"; };
 		5DE70434177BA3D500102C54 /* mymemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mymemory.h; sourceTree = "<group>"; };
-		5DE70435177BD0CD00102C54 /* datasubchunk.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = datasubchunk.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,20 +80,21 @@
 			isa = PBXGroup;
 			children = (
 				5DE70426177B822F00102C54 /* binutils.h */,
-				5DE70427177B822F00102C54 /* subchunk.h */,
-				5DE70428177B822F00102C54 /* wavefile.h */,
-				5DE70429177B822F00102C54 /* wavehdr.h */,
-				5DE7041D177B819800102C54 /* main.cpp */,
-				5DE7041F177B819800102C54 /* wave.1 */,
-				5DE7042A177B9E5A00102C54 /* fmtsubchunk.cpp */,
-				5DE7042B177B9E5A00102C54 /* fmtsubchunk.h */,
-				5DE7042D177B9F9A00102C54 /* subchunk_factory.cpp */,
-				5DE7042E177B9F9B00102C54 /* subchunk_factory.h */,
+				5D064044177D122D00791EE4 /* datasubchunk.cpp */,
+				5D064045177D122D00791EE4 /* datasubchunk.h */,
 				5DE70430177BA21500102C54 /* fillrsubchunk.cpp */,
 				5DE70431177BA21500102C54 /* fillrsubchunk.h */,
-				5DE70433177BA24B00102C54 /* datasubchunk.h */,
+				5DE7042A177B9E5A00102C54 /* fmtsubchunk.cpp */,
+				5DE7042B177B9E5A00102C54 /* fmtsubchunk.h */,
+				5DE7041D177B819800102C54 /* main.cpp */,
 				5DE70434177BA3D500102C54 /* mymemory.h */,
-				5DE70435177BD0CD00102C54 /* datasubchunk.cpp */,
+				5DE70427177B822F00102C54 /* subchunk.h */,
+				5DE7042D177B9F9A00102C54 /* subchunk_factory.cpp */,
+				5DE7042E177B9F9B00102C54 /* subchunk_factory.h */,
+				5DE7041F177B819800102C54 /* wave.1 */,
+				5D064047177D1CD200791EE4 /* wavefile.cpp */,
+				5DE70428177B822F00102C54 /* wavefile.h */,
+				5DE70429177B822F00102C54 /* wavehdr.h */,
 			);
 			path = wave;
 			sourceTree = "<group>";
@@ -150,6 +154,8 @@
 				5DE7042C177B9E5A00102C54 /* fmtsubchunk.cpp in Sources */,
 				5DE7042F177B9F9B00102C54 /* subchunk_factory.cpp in Sources */,
 				5DE70432177BA21500102C54 /* fillrsubchunk.cpp in Sources */,
+				5D064046177D122D00791EE4 /* datasubchunk.cpp in Sources */,
+				5D064048177D1CD200791EE4 /* wavefile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +254,7 @@
 				5DE70425177B819900102C54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
