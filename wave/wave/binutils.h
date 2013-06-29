@@ -12,9 +12,10 @@
 #include <iostream>
 
 template<typename T>
-std::istream& binread(std::istream& in, T& t)
+T binread(std::istream& in, T& t)
 {
-    return in.read(reinterpret_cast<char*>(&t), sizeof(T));
+    in.read(reinterpret_cast<char*>(&t), sizeof(T));
+    return t;
 }
 
 
