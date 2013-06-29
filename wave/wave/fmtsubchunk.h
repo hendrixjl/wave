@@ -18,8 +18,8 @@
 class fmtsubchunk : public subchunk
 {
 public:
-    
     fmtsubchunk(std::istream& in);
+    
     fmtsubchunk(uint32_t size,
                 uint16_t audioFormat,
                 uint16_t numChannels,
@@ -38,30 +38,9 @@ public:
                                         BitsPerSample);
     }
     
-    std::ostream& textout(std::ostream& out) const {
-        out << "SubchunkID=" << SubchunkID;
-        out << " SubchunkSize=" << SubchunkSize;
-        out << " AudioFormat=" << AudioFormat;
-        out << " NumChannels=" << NumChannels;
-        out << " SampleRate=" << SampleRate;
-        out << " ByteRate=" << ByteRate;
-        out << " BlockAlign=" << BlockAlign;
-        out << " BitsPerSample=" << BitsPerSample;
-        out << " {" << size() << "}";
-        return out;
-    }
+    std::ostream& textout(std::ostream& out) const;
     
-    std::ostream& binout(std::ostream& out) const {
-        out.write(SubchunkID.c_str(), SUBCHUNKID_SIZE);
-        binwrite(out, SubchunkSize);
-        binwrite(out, AudioFormat);
-        binwrite(out, NumChannels);
-        binwrite(out, SampleRate);
-        binwrite(out, ByteRate);
-        binwrite(out, BlockAlign);
-        binwrite(out, BitsPerSample);
-        return out;
-    }
+    std::ostream& binout(std::ostream& out) const;
     
     uint32_t size() const {
         return SUBCHUNKID_SIZE + sizeof(uint32_t) + SubchunkSize;
