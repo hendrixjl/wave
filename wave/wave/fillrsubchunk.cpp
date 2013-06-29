@@ -13,15 +13,15 @@ using namespace std;
 
 static auto b = subchunk_factory::instance().register_type<fillrsubchunk>("FLLR", create_subchunk<fillrsubchunk>());
 
-fillrsubchunk::fillrsubchunk(std::istream& in) : SubchunkId("FLLR") {
-    binread(in, SubchunkSize);
-    Data = std::string(SubchunkSize, ' ');
-    in.read(&Data[0], SubchunkSize);
-}
+fillrsubchunk::fillrsubchunk(std::istream& in)
+: SubchunkId{"FLLR"},
+SubchunkSize{binread(in, SubchunkSize)},
+Data{buffered_read(in, SubchunkSize)}
+{}
 
-fillrsubchunk::fillrsubchunk(uint32_t size, const std::string& data)
-: SubchunkId("FLLR"), SubchunkSize(size), Data(data) {
-}
+fillrsubchunk::fillrsubchunk(const std::string& data)
+: SubchunkId("FLLR"), SubchunkSize(static_cast<uint32_t>(data.size())), Data(data)
+{}
     
     
 std::ostream& fillrsubchunk::textout(std::ostream& out) const {
