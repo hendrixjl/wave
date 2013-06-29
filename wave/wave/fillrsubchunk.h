@@ -17,10 +17,10 @@ class fillrsubchunk : public subchunk
 public:
     fillrsubchunk(std::istream& in);
     
-    fillrsubchunk(uint32_t size, const std::string& data);
+    fillrsubchunk(const std::string& data);
     
     std::unique_ptr<subchunk> clone() const {
-        return std::make_unique<fillrsubchunk>(SubchunkSize, Data);
+        return std::make_unique<fillrsubchunk>(Data);
     }
     
     std::ostream& textout(std::ostream& out) const;
