@@ -22,7 +22,7 @@ void subchunk_factory::announce(const std::string& s) const
 
 std::unique_ptr<subchunk> subchunk_factory::create(std::istream& in)
 {
-    auto subchkId = buffered_read(in, subchunk::SUBCHUNKID_SIZE;
+    auto subchkId = buffered_read(in, subchunk::SUBCHUNKID_SIZE);
 
     cout << "create chunk for id=" << subchkId << endl;
     
