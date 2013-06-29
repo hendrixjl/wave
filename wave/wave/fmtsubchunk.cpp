@@ -12,14 +12,16 @@
 
 using namespace std;
 
-fmtsubchunk::fmtsubchunk(std::istream& in) : SubchunkID{"fmt "} {
-    binread(in, SubchunkSize);
-    binread(in, AudioFormat);
-    binread(in, NumChannels);
-    binread(in, SampleRate);
-    binread(in, ByteRate);
-    binread(in, BlockAlign);
-    binread(in, BitsPerSample);
+fmtsubchunk::fmtsubchunk(std::istream& in)
+: SubchunkID{"fmt "},
+SubchunkSize{binread(in, SubchunkSize)},
+AudioFormat{binread(in, AudioFormat)},
+NumChannels{binread(in, NumChannels)},
+SampleRate{binread(in, SampleRate)},
+ByteRate{binread(in, ByteRate)},
+BlockAlign{binread(in, BlockAlign)},
+BitsPerSample{binread(in, BitsPerSample)}
+{
 }
 
 
@@ -40,6 +42,30 @@ ByteRate{byteRate},
 BlockAlign{blockAlign},
 BitsPerSample{bitsPerSample} {}
 
+std::ostream& fmtsubchunk::textout(std::ostream& out) const {
+    out << "SubchunkID=" << SubchunkID;
+    out << " SubchunkSize=" << SubchunkSize;
+    out << " AudioFormat=" << AudioFormat;
+    out << " NumChannels=" << NumChannels;
+    out << " SampleRate=" << SampleRate;
+    out << " ByteRate=" << ByteRate;
+    out << " BlockAlign=" << BlockAlign;
+    out << " BitsPerSample=" << BitsPerSample;
+    out << " {" << size() << "}";
+    return out;
+}
+
+std::ostream& fmtsubchunk::binout(std::ostream& out) const {
+    out.write(SubchunkID.c_str(), SUBCHUNKID_SIZE);
+    binwrite(out, SubchunkSize);
+    binwrite(out, AudioFormat);
+    binwrite(out, NumChannels);
+    binwrite(out, SampleRate);
+    binwrite(out, ByteRate);
+    binwrite(out, BlockAlign);
+    binwrite(out, BitsPerSample);
+    return out;
+}
 
 static auto b = subchunk_factory::instance().register_type<fmtsubchunk>("fmt ", create_subchunk<fmtsubchunk>());
 
