@@ -21,7 +21,7 @@ public:
     wavefile(wavefile&&)=default;
     
     wavefile(const wavefile& wf);
-    
+    wavefile& operator=(const wavefile& wf);
     wavefile(std::istream& in);
     
     std::ostream& textout(std::ostream& out);
