@@ -10,6 +10,7 @@
 #include "subchunk_factory.h"
 #include "binutils.h"
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -48,8 +49,14 @@ vector<T> from_bytebuffer(const string& buffer, vector<T>& result) {
 }
 
 // Read a file stream into a vector of sample data
+//    Assumption: bytes is a whole multiple of sizeof(T)
 template<typename T>
 vector<T> from_stream(istream& in, uint32_t bytes, vector<T>& result) {
+    if ((bytes % sizeof(T)) != 0) {
+        throw length_error(string(__func__) +
+                       ": Data size is not a multiple of sample type " +
+                       typeid(T).name() + " size!");
+    }
     auto data = buffered_read(in, bytes);
     result = from_bytebuffer(data, result);
     return result;
