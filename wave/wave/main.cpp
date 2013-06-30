@@ -51,10 +51,16 @@ pair<bool,wavefile> readwf(const string& infile)
         return make_pair<bool,wavefile>(false, wavefile{});
     }
     
-    auto wf = wavefile{in};
-    wf.textout(cout);
+    auto wf = wavefile{};
+    try {
+        wf = wavefile{in};
+    } catch (std::exception& e) {
+        cout << "Exception creating wavefile object from " << infile << endl;
+        cout << e.what() << endl;
+        return make_pair(false, wf);
+    }
     
-    return make_pair<bool,wavefile>(false, move(wf));
+    return make_pair(true, move(wf));
 }
 
 /**
