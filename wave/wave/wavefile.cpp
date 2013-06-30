@@ -19,6 +19,14 @@ wavefile::wavefile(const wavefile& wf) : hdr{wf.hdr} {
     }
 }
 
+wavefile& wavefile::operator=(const wavefile& wf) {
+    hdr = wf.hdr;
+    for (const auto&  sc : wf.subchunks) {
+        subchunks.push_back( sc->clone() );
+    }
+    return *this;
+}
+
 wavefile::wavefile(istream& in)
 : hdr{in}, subchunks{} {
     auto bleft = hdr.filesize() - hdr.size();
