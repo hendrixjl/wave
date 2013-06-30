@@ -23,25 +23,11 @@ public:
     ~wavhdr()=default;
     wavhdr& operator=(const wavhdr&)=default;
     
-    wavhdr(std::istream& in)
-    : ChunkId{buffered_read(in, CHUNK_ID_SIZE)},
-    ChunkSize{binread(in, ChunkSize)},
-    Format{buffered_read(in, FORMAT_SIZE)}
-    {
-    }
+    wavhdr(std::istream& in);
     
-    std::ostream& textout(std::ostream& out) const  {
-        out << "Header=" << ChunkId << " size=" << ChunkSize << " Format=" << Format;
-        out << " {" << size() << "}";
-        return out;
-    }
+    std::ostream& textout(std::ostream& out) const;
     
-    std::ostream& binout(std::ostream& out) const {
-        out.write(ChunkId.c_str(), CHUNK_ID_SIZE);
-        binwrite(out, ChunkSize);
-        out.write(Format.c_str(), FORMAT_SIZE);
-        return out;
-    }
+    std::ostream& binout(std::ostream& out) const;
     
     uint32_t size() const {
         return CHUNK_ID_SIZE + sizeof(uint32_t) + FORMAT_SIZE;
