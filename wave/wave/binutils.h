@@ -11,6 +11,13 @@
 
 #include <iostream>
 
+/**
+ * @brief Read "raw" bytes from an istream directly into
+ *        a variable.
+ * @param in - The istream
+ * @param t - The variable to read into
+ * @return The value read
+ */
 template<typename T>
 T binread(std::istream& in, T& t)
 {
@@ -19,6 +26,13 @@ T binread(std::istream& in, T& t)
 }
 
 
+/**
+ * @brief Read raw bytes from an istream into a buffer.
+ * @note - Using a string as a handy managered buffer type
+ * @param in - The istream
+ * @param bytesToRead - The number of bytes to read.
+ * @return A string containing the data.
+ */
 inline std::string buffered_read(std::istream& in, size_t bytesToRead)
 {
     auto buffer = std::string(bytesToRead, '\0');
@@ -26,6 +40,13 @@ inline std::string buffered_read(std::istream& in, size_t bytesToRead)
     return buffer;
 }
 
+
+/**
+ * @brief Write "binary" data to an ostream.
+ * @note The output data is written "raw", without formatting.
+ * @param out - The ostream
+ * @param t - The output variable
+ */
 template<typename T>
 std::ostream& binwrite(std::ostream& out, const T& t) {
     return out.write(reinterpret_cast<const char*>(&t), sizeof(T));
