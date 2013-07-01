@@ -9,6 +9,7 @@
 #include "wavefile.h"
 #include "binutils.h"
 #include "subchunk_factory.h"
+#include "fmtsubchunk.h"
 #include <iostream>
 
 using namespace std;
@@ -30,10 +31,19 @@ wavefile& wavefile::operator=(const wavefile& wf) {
 wavefile::wavefile(istream& in)
 : hdr{in}, subchunks{} {
     auto bleft = hdr.filesize() - hdr.size();
+    auto channels = uint16_t{};
+    auto bitsPerSample = uin16_t{};
+    auto sampeRate = uint32_t{};
     while (bleft > 0) {
         auto subchnk = subchunk_factory::instance().create(in);
         bleft -= subchnk->size();
         subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
+        
+        if (fmtsubchunk* fmt = dynamic_cast<fmtsubchunk*>(subchnk)) {
+            channels = fmt->numChannels();
+            bitsPerSample = fmt->bitsPerSample();
+            sampleRate = fmt->sampleRate();
+        }
     }
 }
 
