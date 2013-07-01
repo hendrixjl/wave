@@ -41,7 +41,7 @@ wavefile::wavefile(istream& in)
 : hdr{in}, subchunks{} {
     auto bytes_left = hdr.filesize() - hdr.size();
     while (bleft > 0) {
-        auto subchnk = subchunk_factory::instance().create(in);
+        auto subchnk = subchunk_factory::instance().create(in, bitsPerSample, numChannels);
         subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
         extract_format_data(subchnk);
         bytes_left -= subchnk->size();
@@ -80,7 +80,7 @@ bool wavefile::fix(std::istream& in) {
     hdr = wavhdr(in);
     auto bleft = hdr.filesize() - hdr.size();
     while (bleft > 0) {
-        auto subchnk = subchunk_factory::instance().make_fixed_subchunk(bleft, in);
+        auto subchnk = subchunk_factory::instance().make_fixed_subchunk(bleft, in, bitsPerSample, numChannels);
         subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
         extract_format_data(subchnk);
         bleft -= subchnk->size();
