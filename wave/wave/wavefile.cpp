@@ -81,8 +81,14 @@ bool wavefile::fix(std::istream& in) {
     auto bleft = hdr.filesize() - hdr.size();
     while (bleft > 0) {
         auto subchnk = subchunk_factory::instance().make_fixed_subchunk(bleft, in);
-        bleft -= subchnk->size();
         subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
+        extract_format_data(subchnk);
+        bleft -= subchnk->size();
+    }
+    
+    if (channels == 0) {
+        cout << "No format subchunk!";
+        return false;
     }
     return true;
 }
