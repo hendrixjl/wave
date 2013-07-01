@@ -59,9 +59,9 @@ private:
 };
 
 
-#define REGISTER_SUBCHUNK_TYPE( the_type, name  ) \
+#define REGISTER_SUBCHUNK_TYPE( THE_TYPE, NAME  ) \
 namespace { \
-bool ignore = subchunk_factory::instance().register_type( (name), creat_subchunk<the_type>() ); \
+bool ignore = subchunk_factory::instance().register_type<THE_TYPE>( (NAME), creat_subchunk<THE_TYPE>() ); \
 }
 
 
