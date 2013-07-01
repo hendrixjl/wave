@@ -32,7 +32,7 @@ BitsPerSample{binread(in, BitsPerSample)}
 
 
 fmtsubchunk::fmtsubchunk(uint32_t size,
-            uint16_t audioFormat,
+            AudioFormat_t audioFormat,
             uint16_t numChannels,
             uint32_t sampleRate,
             uint32_t byteRate,
@@ -51,7 +51,7 @@ BitsPerSample{bitsPerSample} {}
 std::ostream& fmtsubchunk::textout(std::ostream& out) const {
     out << "SubchunkID=" << SubchunkID;
     out << " SubchunkSize=" << SubchunkSize;
-    out << " AudioFormat=" << AudioFormat;
+    out << " AudioFormat=" << static_cast<uint16_t>(AudioFormat);
     out << " NumChannels=" << NumChannels;
     out << " SampleRate=" << SampleRate;
     out << " ByteRate=" << ByteRate;
