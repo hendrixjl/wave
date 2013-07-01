@@ -14,7 +14,13 @@
 
 using namespace std;
 
-wavefile::wavefile(const wavefile& wf) : hdr{wf.hdr} {
+
+wavefile::wavefile(const wavefile& wf) 
+: hdr{wf.hdr},
+numChannels{wf.numChannels},
+bitsPerSampe{wf.bitsPerSample},
+sampleRate{wf.sampleRate}
+{
     for (const auto&  sc : wf.subchunks) {
         subchunks.push_back( sc->clone() );
     }
@@ -22,6 +28,9 @@ wavefile::wavefile(const wavefile& wf) : hdr{wf.hdr} {
 
 wavefile& wavefile::operator=(const wavefile& wf) {
     hdr = wf.hdr;
+    numChannels = wf.numChannels;
+    bitsPerSampe = wf.bitsPerSample;
+    sampleRate = wf.sampleRate;
     for (const auto&  sc : wf.subchunks) {
         subchunks.push_back( sc->clone() );
     }
@@ -30,20 +39,24 @@ wavefile& wavefile::operator=(const wavefile& wf) {
 
 wavefile::wavefile(istream& in)
 : hdr{in}, subchunks{} {
-    auto bleft = hdr.filesize() - hdr.size();
-    auto channels = uint16_t{};
-    auto bitsPerSample = uin16_t{};
-    auto sampeRate = uint32_t{};
+    auto bytes_left = hdr.filesize() - hdr.size();
     while (bleft > 0) {
         auto subchnk = subchunk_factory::instance().create(in);
-        bleft -= subchnk->size();
         subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
-        
-        if (fmtsubchunk* fmt = dynamic_cast<fmtsubchunk*>(subchnk)) {
-            channels = fmt->numChannels();
-            bitsPerSample = fmt->bitsPerSample();
-            sampleRate = fmt->sampleRate();
-        }
+        extract_format_data(subchnk);
+        bytes_left -= subchnk->size();
+    }
+    
+    if (channels == 0) {
+        throw domain_error(string{__func__} + ": No format subchunk in file!");
+    }
+}
+
+void wavefile::extract_format_data(const subchunk* sc) {
+    if ((fmtsubchunk* fmt = dynamic_cast<fmtsubchunk*>(sc)) != nullptr) {
+        channels = fmt->numChannels();
+        bitsPerSample = fmt->bitsPerSample();
+        sampleRate = fmt->sampleRate();
     }
 }
 
