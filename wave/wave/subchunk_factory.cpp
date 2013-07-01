@@ -20,9 +20,13 @@ void subchunk_factory::announce(const std::string& s) const
     cout << "registering factory for " << s << endl;
 }
 
-std::unique_ptr<subchunk> subchunk_factory::create(std::istream& in)
+std::unique_ptr<subchunk> subchunk_factory::create(std::istream& in, uint16_t numChannels, uint16_t bitsPerSample)
 {
     auto subchkId = buffered_read(in, subchunk::SUBCHUNKID_SIZE);
+
+    if (subchkId == "data") {
+        subchkId = FormattedDataSubchunkId(numChannels, bitsPerSample);
+    }
 
     cout << "create chunk for id=" << subchkId << endl;
     
