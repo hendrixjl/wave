@@ -19,9 +19,11 @@ class wavefile
 public:
     wavefile()=default;
     wavefile(wavefile&&)=default;
-    
+    wavefile& operator=(wavefile&& wf)=default;
+    // Explicitly define copy construction/assignment
     wavefile(const wavefile& wf);
     wavefile& operator=(const wavefile& wf);
+    
     wavefile(std::istream& in);
     
     std::ostream& textout(std::ostream& out);
