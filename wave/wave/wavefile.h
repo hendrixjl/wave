@@ -35,6 +35,10 @@ public:
 private:
     wavhdr hdr;
     std::vector<std::unique_ptr<subchunk>> subchunks;
+    uint16_t auto channels = 0;
+    uin16_t bitsPerSample = 0;
+    uint32_t sampeRate = 0;
+
 };
 
 
