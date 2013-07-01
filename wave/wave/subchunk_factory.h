@@ -59,4 +59,10 @@ private:
 };
 
 
+#define REGISTER_SUBCHUNK_TYPE( the_type, name  ) \
+namespace { \
+bool ignore = subchunk_factory::instance().register_type( (name), creat_subchunk<the_type>() ); \
+}
+
+
 #endif /* defined(__wave__subchunk_factory__) */
