@@ -14,7 +14,9 @@
 
 using namespace std;
 
-static auto b = subchunk_factory::instance().register_type<datasubchunk>("data", create_subchunk<datasubchunk>());
+// static auto b = subchunk_factory::instance().register_type<datasubchunk>("data", create_subchunk<datasubchunk>());
+
+REGISTER_SUBCHUNK_TYPE( datasubchunk, "data" );
 
 // Convert a block of bytes to 8-bit sample data
 uint8_t bytesToSample(const char *b, uint8_t& sample) {
