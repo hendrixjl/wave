@@ -33,6 +33,9 @@ public:
     bool fix(std::istream& in);
     
 private:
+
+    void extract_format_data(const subchunk* sc);
+
     wavhdr hdr;
     std::vector<std::unique_ptr<subchunk>> subchunks;
     uint16_t numChannels = 0;
