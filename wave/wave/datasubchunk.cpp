@@ -14,9 +14,14 @@
 
 using namespace std;
 
-// static auto b = subchunk_factory::instance().register_type<datasubchunk>("data", create_subchunk<datasubchunk>());
+enum {
+    MONO = 1,
+    STERIO = 2,
+    BITS_PER_SAMPLE_8 = 8,
+    BITS_PER_SAMPLE_16 = 16
+};
 
-REGISTER_SUBCHUNK_TYPE( datasubchunk, "data" );
+REGISTER_SUBCHUNK_TYPE( datasubchunk, FormattedDataSubchunkId(MONO, BITS_PER_SAMPLE_16) );
 
 // Convert a block of bytes to 8-bit sample data
 uint8_t bytesToSample(const char *b, uint8_t& sample) {
