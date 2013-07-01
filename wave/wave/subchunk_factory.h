@@ -54,9 +54,11 @@ template<typename T>
 class create_subchunk
 {
 public:
-    std::unique_ptr<subchunk> operator()(std::istream& in)
+    std::unique_ptr<subchunk> operator()(std::istream& in,
+                                         uint16_t bitsPerSecond,
+                                         uint16_t numChannels)
     {
-        return std::make_unique<T>(in);
+        return std::make_unique<T>(in, bitsPerSecond, numChannels);
     }
 private:
 };
