@@ -18,10 +18,15 @@
 class fmtsubchunk : public subchunk
 {
 public:
+
+    enum class AudioFormat_t : uint16_t {
+        PCM
+    };
+
     fmtsubchunk(std::istream& in);
     
     fmtsubchunk(uint32_t size,
-                uint16_t audioFormat,
+                AudioFormat_t audioFormat,
                 uint16_t numChannels,
                 uint32_t sampleRate,
                 uint32_t byteRate,
@@ -46,7 +51,7 @@ public:
         return SUBCHUNKID_SIZE + sizeof(uint32_t) + SubchunkSize;
     }
     
-    uint16_t audioFormat() const {
+    AudioFormat_t audioFormat() const {
         return AudioFormat;
     }
     
@@ -73,7 +78,7 @@ public:
 private:
     std::string SubchunkID;
     uint32_t SubchunkSize;
-    uint16_t AudioFormat;
+    AudioFormat_t AudioFormat;
     uint16_t NumChannels;
     uint32_t SampleRate;
     uint32_t ByteRate;
