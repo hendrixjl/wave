@@ -52,5 +52,15 @@ std::ostream& binwrite(std::ostream& out, const T& t) {
     return out.write(reinterpret_cast<const char*>(&t), sizeof(T));
 }
 
+/**
+ * @brief Encode the number of channels and bits per sample into the Id
+ * for a data subchunk.
+ * @param numChannels
+ * @param bitsPerSample
+ * @return a std::string
+ */
+inline std::string FormattedDataSubchunkId(uint16_t numChannels, uint16_t bitsPerSample) {
+    return std::string{"data_"} + std::to_string(numChannels) + "_" + std::to_string(bitsPerSample);
+}
 
 #endif
