@@ -41,6 +41,8 @@ private:
     subchunk_factory()=default;
     subchunk_factory(const subchunk_factory&)=delete;
     subchunk_factory(subchunk_factory&&)=delete;
+    subchunk_factory& operator(const subchunk_factory&)=delete;
+    subchunk_factory& operator(subchunk_factory&&)=delete;
     
     void announce(const std::string& s) const;
     
