@@ -33,7 +33,7 @@ public:
         return true;
     }
     
-    std::unique_ptr<subchunk> create(std::istream& in);
+    std::unique_ptr<subchunk> create(std::istream& in, uint16_t numChannels, uint16_t bitsPerSample);
     
     std::unique_ptr<subchunk> make_fixed_subchunk(uint32_t size, std::istream& in);
     
