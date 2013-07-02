@@ -28,24 +28,22 @@ std::unique_ptr<subchunk> subchunk_factory::create(std::istream& in, uint16_t nu
         subchkId = FormattedDataSubchunkId(numChannels, bitsPerSample);
     }
 
-    cout << "create chunk for id=" << subchkId << endl;
-    
     auto i = mymap.find(subchkId);
-    if (i != mymap.end())
+    if (i == mymap.end())
     {
-        return (i->second)(in);
-    }
-    else
-    {
-        cout << "Not found!" << endl;
+        throw domain_error(string{"chunk id "} + subchkId + " Not found!");
     }
 
-    return nullptr;
+    return (i->second)(in);
 }
 
 
-std::unique_ptr<subchunk> subchunk_factory::make_fixed_subchunk(uint32_t size, std::istream& in) {
+std::unique_ptr<subchunk> subchunk_factory::make_fixed_subchunk(uint32_t size, std::istream& in, uint16_t numChannels, uint16_t bitsPerSample) {
     auto subchkId = buffered_read(in, subchunk::SUBCHUNKID_SIZE);
+    
+    if (subchkId == "data") {
+        subchkId = FormattedDataSubchunkId(numChannels, bitsPerSample);
+    }
     
     std::unordered_map<std::string, creator_t> mymap;
     
