@@ -18,7 +18,7 @@ using namespace std;
 wavefile::wavefile(const wavefile& wf) 
 : hdr{wf.hdr},
 numChannels{wf.numChannels},
-bitsPerSampe{wf.bitsPerSample},
+bitsPerSample{wf.bitsPerSample},
 sampleRate{wf.sampleRate}
 {
     for (const auto&  sc : wf.subchunks) {
@@ -29,7 +29,7 @@ sampleRate{wf.sampleRate}
 wavefile& wavefile::operator=(const wavefile& wf) {
     hdr = wf.hdr;
     numChannels = wf.numChannels;
-    bitsPerSampe = wf.bitsPerSample;
+    bitsPerSample = wf.bitsPerSample;
     sampleRate = wf.sampleRate;
     for (const auto&  sc : wf.subchunks) {
         subchunks.push_back( sc->clone() );
@@ -40,21 +40,22 @@ wavefile& wavefile::operator=(const wavefile& wf) {
 wavefile::wavefile(istream& in)
 : hdr{in}, subchunks{} {
     auto bytes_left = hdr.filesize() - hdr.size();
-    while (bleft > 0) {
-        auto subchnk = subchunk_factory::instance().create(in, bitsPerSample, numChannels);
-        subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
-        extract_format_data(subchnk);
+    while (bytes_left > 0) {
+        auto subchnk = subchunk_factory::instance().create(in, numChannels, bitsPerSample);
+        extract_format_data(*subchnk);
         bytes_left -= subchnk->size();
+        subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
     }
     
-    if (channels == 0) {
+    if (numChannels == 0) {
         throw domain_error(string{__func__} + ": No format subchunk in file!");
     }
 }
 
-void wavefile::extract_format_data(const subchunk* sc) {
-    if ((fmtsubchunk* fmt = dynamic_cast<fmtsubchunk*>(sc)) != nullptr) {
-        channels = fmt->numChannels();
+void wavefile::extract_format_data(const subchunk& sc) {
+    const fmtsubchunk* fmt = dynamic_cast<const fmtsubchunk*>(&sc);
+    if (fmt != nullptr) {
+        numChannels = fmt->numChannels();
         bitsPerSample = fmt->bitsPerSample();
         sampleRate = fmt->sampleRate();
     }
@@ -81,12 +82,12 @@ bool wavefile::fix(std::istream& in) {
     auto bleft = hdr.filesize() - hdr.size();
     while (bleft > 0) {
         auto subchnk = subchunk_factory::instance().make_fixed_subchunk(bleft, in, bitsPerSample, numChannels);
-        subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
-        extract_format_data(subchnk);
+        extract_format_data(*subchnk);
         bleft -= subchnk->size();
+        subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
     }
     
-    if (channels == 0) {
+    if (numChannels == 0) {
         cout << "No format subchunk!";
         return false;
     }
