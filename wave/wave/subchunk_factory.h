@@ -35,14 +35,14 @@ public:
     
     std::unique_ptr<subchunk> create(std::istream& in, uint16_t numChannels, uint16_t bitsPerSample);
     
-    std::unique_ptr<subchunk> make_fixed_subchunk(uint32_t size, std::istream& in);
+    std::unique_ptr<subchunk> make_fixed_subchunk(uint32_t size, std::istream& in, uint16_t numChannels, uint16_t bitsPerSample);
     
 private:
     subchunk_factory()=default;
     subchunk_factory(const subchunk_factory&)=delete;
     subchunk_factory(subchunk_factory&&)=delete;
-    subchunk_factory& operator(const subchunk_factory&)=delete;
-    subchunk_factory& operator(subchunk_factory&&)=delete;
+    subchunk_factory& operator=(const subchunk_factory&)=delete;
+    subchunk_factory& operator=(subchunk_factory&&)=delete;
     
     void announce(const std::string& s) const;
     
@@ -64,7 +64,7 @@ private:
 
 #define REGISTER_SUBCHUNK_TYPE( THE_TYPE, NAME  ) \
 namespace { \
-bool ignore = subchunk_factory::instance().register_type<THE_TYPE>( (NAME), creat_subchunk<THE_TYPE>() ); \
+bool ignore = subchunk_factory::instance().register_type<THE_TYPE>( (NAME), create_subchunk<THE_TYPE>() ); \
 }
 
 
