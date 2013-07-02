@@ -34,13 +34,13 @@ public:
     
 private:
 
-    void extract_format_data(const subchunk* sc);
+    void extract_format_data(const subchunk& sc);
 
     wavhdr hdr;
     std::vector<std::unique_ptr<subchunk>> subchunks;
     uint16_t numChannels = 0;
-    uin16_t bitsPerSample = 0;
-    uint32_t sampeRate = 0;
+    uint16_t bitsPerSample = 0;
+    uint32_t sampleRate = 0;
 };
 
 
