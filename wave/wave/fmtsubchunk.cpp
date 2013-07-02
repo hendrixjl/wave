@@ -24,10 +24,6 @@ ByteRate{binread(in, ByteRate)},
 BlockAlign{binread(in, BlockAlign)},
 BitsPerSample{binread(in, BitsPerSample)}
 {
-    if (SubchunkID != "fmt ") {
-        throw domain_error(string(__func__) +
-                           ": This is not a fmt chunk.");
-    }
 }
 
 
