@@ -11,7 +11,7 @@
 #include <iostream>
 using namespace std;
 
-static auto b = subchunk_factory::instance().register_type<fillrsubchunk>("FLLR", create_subchunk<fillrsubchunk>());
+REGISTER_SUBCHUNK_TYPE( fillrsubchunk, "FLLR" );
 
 fillrsubchunk::fillrsubchunk(std::istream& in)
 : SubchunkId{"FLLR"},
