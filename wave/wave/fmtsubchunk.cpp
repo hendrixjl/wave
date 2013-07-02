@@ -69,5 +69,5 @@ std::ostream& fmtsubchunk::binout(std::ostream& out) const {
     return out;
 }
 
-static auto b = subchunk_factory::instance().register_type<fmtsubchunk>("fmt ", create_subchunk<fmtsubchunk>());
+REGISTER_SUBCHUNK_TYPE( fmtsubchunk, "fmt " );
 
