@@ -18,6 +18,7 @@ class wavefile
 {
 public:
     wavefile()=default;
+    ~wavefile()=default;
     wavefile(wavefile&&)=default;
     wavefile& operator=(wavefile&& wf)=default;
     // Explicitly define copy construction/assignment
