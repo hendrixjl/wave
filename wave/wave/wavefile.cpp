@@ -84,7 +84,7 @@ bool wavefile::fix(std::istream& in) {
         auto subchnk = subchunk_factory::instance().make_fixed_subchunk(bleft, in, bitsPerSample, numChannels);
         extract_format_data(*subchnk);
         bleft -= subchnk->size();
-        subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
+        subchunks.push_back(std::move(subchnk));
     }
     
     if (numChannels == 0) {
