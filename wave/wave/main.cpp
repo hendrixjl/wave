@@ -48,7 +48,7 @@ pair<bool,wavefile> readwf(const string& infile)
     if (!in)
     {
         cout << "Could not open " << infile << endl;
-        return make_pair<bool,wavefile>(false, wavefile{});
+        return make_pair(false, wavefile{});
     }
     
     auto wf = wavefile{};
