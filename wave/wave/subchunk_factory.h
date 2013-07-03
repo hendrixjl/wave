@@ -61,10 +61,15 @@ public:
 private:
 };
 
+// ridiculous macro magic to help generate a unique name
+// (needed for registering more than one subchunk type in a single .cpp
+#define TOKENPASTE(x, y) x ## y
+#define UNIQUE(x, y) TOKENPASTE(x, y)
 
+// Macro for registering a subchunk type with a unique name
 #define REGISTER_SUBCHUNK_TYPE( THE_TYPE, NAME  ) \
 namespace { \
-bool ignore = subchunk_factory::instance().register_type<THE_TYPE>( (NAME), create_subchunk<THE_TYPE>() ); \
+bool UNIQUE(ignore_, __LINE__) = subchunk_factory::instance().register_type<THE_TYPE>( (NAME), create_subchunk<THE_TYPE>() ); \
 }
 
 
