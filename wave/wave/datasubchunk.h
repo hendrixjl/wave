@@ -12,23 +12,51 @@
 #include "subchunk.h"
 #include "mymemory.h"
 #include <vector>
+#include <string>
 
-class datasubchunk : public subchunk // assume 16 bits
+template<typename T>
+class datasubchunk : public subchunk
 {
 public:
-    using Sample_t=int16_t;
+    using Sample_t=T;
     
-    datasubchunk(std::istream& in);
+    datasubchunk(std::istream& in)
+    : SubchunkId{"data"},
+    SubchunkSize{binread(in,SubchunkSize)},
+    Data{from_stream(in, SubchunkSize, Data)}
+    {}
     
-    datasubchunk(uint32_t size, const std::vector<Sample_t>& data);
+    datasubchunk(uint32_t size, const std::vector<Sample_t>& data)
+    : SubchunkId{"data"},
+    SubchunkSize{size},
+    Data{data}
+    {}
     
     std::unique_ptr<subchunk> clone() const {
         return std::make_unique<datasubchunk>(SubchunkSize, Data);
     }
     
-    std::ostream& textout(std::ostream& out) const;
+    std::ostream& textout(std::ostream& out) const {
+        out << "SubchunkId=" << SubchunkId;
+        out << " SubchunkSize=" << SubchunkSize;
+        out << " {" << size() << "} ";
+        if (!Data.empty()) {
+            // for (const auto& d : Data) {
+            // out << " " << d;
+            // }
+            out << " " << Data[0] << "... for " << Data.size() << " samples";
+        }
+        return out;
+    }
     
-    std::ostream& binout(std::ostream& out) const;
+    std::ostream& binout(std::ostream& out) const {
+        out.write(SubchunkId.c_str(), SUBCHUNKID_SIZE);
+        binwrite(out, SubchunkSize);
+        for (auto d : Data) {
+            binwrite(out, d); // @TODO make portable
+        }
+        return out;
+    }
     
     uint32_t size() const {
         return SUBCHUNKID_SIZE + sizeof(uint32_t) + SubchunkSize;
