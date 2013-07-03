@@ -44,7 +44,7 @@ wavefile::wavefile(istream& in)
         auto subchnk = subchunk_factory::instance().create(in, numChannels, bitsPerSample);
         extract_format_data(*subchnk);
         bytes_left -= subchnk->size();
-        subchunks.push_back(std::unique_ptr<subchunk>(subchnk.release()));
+        subchunks.push_back(std::move(subchnk));
     }
     
     if (numChannels == 0) {
